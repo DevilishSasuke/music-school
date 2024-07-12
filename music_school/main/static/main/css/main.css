@@ -1,0 +1,19 @@
+.home-content {
+  margin: 10px;
+  margin-top: 2%;
+  border: 3px solid black;
+  border-radius: 10px;
+  font-weight: 400;
+  font-family: "Montserrat";
+}
+
+.home-button {
+  overflow: hidden;
+  width: 30vw;
+  height: 25vh;
+  font-size: 4rem;
+  border: 0px;
+  border-radius: 15px;
+  color: black;
+  margin: 10px 15px;
+}

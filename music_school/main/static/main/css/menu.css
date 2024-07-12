@@ -1,0 +1,33 @@
+.topmenu {
+  display: flex;
+  overflow: hidden;
+  margin: auto;
+}
+
+.topmenu .white-section {
+  background-color: #777;
+}
+
+.topmenu .dark-section {
+  background-color: #444;
+}
+
+.topmenu a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 2px 0px;
+  text-decoration: none;
+  font-size: 3.5rem;
+  flex: 1;
+}
+
+.topmenu a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topmenu a.active {
+  background-color: #04AA6D;
+  color: white;
+}

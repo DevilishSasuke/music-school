@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %} 
+  <div class="home-content">
+    <div class="home-row">
+      <button class="home-button" style="background-color: #f0ad4e;">
+        ПРОФИЛЬ <i class="fa-regular fa-circle-user"></i>
+      </button>
+      <button class="home-button" style="background-color: #e61610;">
+        КАЛЕНДАРЬ <i class="fa-regular fa-calendar-days"></i>
+      </button>
+      <button class="home-button" style="background-color: #e692f8;">
+        ЧАТЫ <i class="fa-regular fa-message"></i>
+      </button>
+    </div>
+    <div class="home-row">
+      <button class="home-button" style="background-color: #92d36e;">
+        УРОКИ <i class="fa-solid fa-music"></i>
+      </button>
+      <button class="home-button" style="background-color: #868282;">
+        РЕЙТИНГ <i class="fa-regular fa-star"></i>
+      </button>
+    </div>
+    <div class="home-row">
+      <button class="home-button" style="background-color: #1464f6;">
+        ОПЛАТА <i class="fa-regular fa-credit-card"></i>
+      </button>
+    </div>
+  </div>
+{% endblock %}
