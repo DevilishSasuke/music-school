@@ -3,8 +3,8 @@
   margin-top: 2%;
   border: 3px solid black;
   border-radius: 10px;
-  font-weight: 400;
   font-family: "Montserrat";
+  padding: 20px;
 }
 
 .home-button {
@@ -12,8 +12,29 @@
   width: 30vw;
   height: 25vh;
   font-size: 4rem;
+  font-weight: 600;
   border: 0px;
   border-radius: 15px;
   color: black;
   margin: 10px 15px;
+}
+
+.bug-form {
+  display: block;
+  padding: 10vh;
+  font-size: 2rem;
+}
+
+.bug-form input, .bug-form textarea {
+  padding: 12px 20px;
+  width: 80%;
+  margin: 8px 0;
+  margin-bottom: 3%;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  background-color: rgba(230, 230, 230, 1);
+  letter-spacing: 1.2px;
+  autocomplete: off;
 }

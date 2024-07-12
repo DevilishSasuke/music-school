@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="bug-form">
+    <label>Введите Вашу электронную почту для обратной связи</label>
+    <input type="email" placeholder="example@eg.com">
+    <label>Подробно опишите случившуюся проблему и алгоритм действий, который её вызвал</label>
+    <textarea rows="5"></textarea>
+    <button type="submit" class="btn btn-success" 
+    style="width: 80%; height: 10vh; font-size: 40px;"> Отправить </button>
+  </div>
+{% endblock %}

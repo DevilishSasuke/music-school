@@ -4,26 +4,26 @@
 {% block content %} 
   <div class="home-content">
     <div class="home-row">
-      <button class="home-button" style="background-color: #f0ad4e;">
+      <button class="home-button" style="background-color: #f0ad4e;" onclick="location.href='{% url 'profile'%}'">
         ПРОФИЛЬ <i class="fa-regular fa-circle-user"></i>
       </button>
-      <button class="home-button" style="background-color: #e61610;">
+      <button class="home-button" style="background-color: #e61610;" onclick="location.href='{% url 'calendar'%}'">
         КАЛЕНДАРЬ <i class="fa-regular fa-calendar-days"></i>
       </button>
-      <button class="home-button" style="background-color: #e692f8;">
+      <button class="home-button" style="background-color: #e692f8;" onclick="location.href='{% url 'chat'%}'">
         ЧАТЫ <i class="fa-regular fa-message"></i>
       </button>
     </div>
     <div class="home-row">
-      <button class="home-button" style="background-color: #92d36e;">
+      <button class="home-button" style="background-color: #92d36e;" onclick="location.href='{% url 'lessons'%}'">
         УРОКИ <i class="fa-solid fa-music"></i>
       </button>
-      <button class="home-button" style="background-color: #868282;">
+      <button class="home-button" style="background-color: #868282;" onclick="location.href='{% url 'rating'%}'">
         РЕЙТИНГ <i class="fa-regular fa-star"></i>
       </button>
     </div>
     <div class="home-row">
-      <button class="home-button" style="background-color: #1464f6;">
+      <button class="home-button" style="background-color: #1464f6;" onclick="location.href='{% url 'pay'%}'">
         ОПЛАТА <i class="fa-regular fa-credit-card"></i>
       </button>
     </div>
