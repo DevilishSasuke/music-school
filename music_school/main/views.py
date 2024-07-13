@@ -1,4 +1,12 @@
 from django.shortcuts import render
+from .forms import BugForm
+
+from django.core.mail import send_mail
+
+from dotenv import load_dotenv
+from os import getenv
+
+load_dotenv()
 
 # Create your views here.
 def home(request):
@@ -23,4 +31,29 @@ def pay(request):
   pass
 
 def bug(request):
-  return render(request, 'bug.html')
+  if  request.method == 'POST':
+    form = BugForm(request.POST)
+    if form.is_valid():
+      user_email = form.cleaned_data['user_email']
+      user_msg = form.cleaned_data['text']
+      send_bug_report(user_email, user_msg)
+
+  form = BugForm()
+
+  data = {
+    'title': 'Сообщить об ошибке',
+    'form': form,
+  }
+
+  return render(request, 'bug.html', data)
+
+
+
+def send_bug_report(email, text):
+  subject = "Bug report"
+  message = f'Bug report from {email}:\n\n {text}'
+  sender = getenv("CORPORATE_EMAIL")
+  recipient = [getenv("ADMIN_EMAIL")]
+
+  send_mail(subject, message, sender, recipient)
+  

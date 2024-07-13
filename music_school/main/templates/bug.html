@@ -1,13 +1,16 @@
 {% extends 'layout.html' %}
 {% load static %}
 
+{% block title %}{{ title }}{% endblock %}
+
 {% block content %}
-  <div class="bug-form">
+  <form class="bug-form" method="post" autocomplete="off">
+    {% csrf_token %}
     <label>Введите Вашу электронную почту для обратной связи</label>
-    <input type="email" placeholder="example@eg.com">
+    {{ form.user_email }}
     <label>Подробно опишите случившуюся проблему и алгоритм действий, который её вызвал</label>
-    <textarea rows="5"></textarea>
+    {{ form.text }}
     <button type="submit" class="btn btn-success" 
     style="width: 80%; height: 10vh; font-size: 40px;"> Отправить </button>
-  </div>
+  </form>
 {% endblock %}
