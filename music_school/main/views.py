@@ -9,25 +9,60 @@ from os import getenv
 load_dotenv()
 
 # Create your views here.
-def home(request):
-  return render(request, 'home.html')
+def home(request): 
+
+  data = {
+    "title": "Главная страница",
+  }
+
+  return render(request, 'home.html', data)
 
 def profile(request):
-  return render(request, 'layout.html')
+
+  data = {
+    "title": "Мой профиль",
+  }
+
+  return render(request, 'layout.html', data)
 
 def calendar(request):
+  
+  data = {
+    "title": "Календарь заданий",
+  }
+
   pass
 
 def chat(request):
+
+  data = {
+    "title": "Мои чаты",
+  }
+
   pass
 
 def lessons(request):
+
+  data = {
+    "title": "Мои уроки",
+  }
+  
   pass
 
 def rating(request):
+
+  data = {
+    "title": "Рейтинг учителей",
+  }
+
   pass
 
 def pay(request):
+
+  data = {
+    "title": "Оплата",
+  }
+
   pass
 
 def bug(request):
@@ -41,7 +76,7 @@ def bug(request):
   form = BugForm()
 
   data = {
-    'title': 'Сообщить об ошибке',
+    'title': 'Сообщение об ошибке',
     'form': form,
   }
 

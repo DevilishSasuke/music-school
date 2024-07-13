@@ -1,0 +1,12 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block content %}
+  <form name="login_form" id="login_form" class="auth_form"
+    method="post" autocomplete="off">
+    {% csrf_token %}
+    {{ form.user_email }}
+    {{ form.password }}
+    <input type="submit" value="Войти" id="submit-button" />
+    </form>
+{% endblock %}
