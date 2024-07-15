@@ -1,6 +1,10 @@
 {% extends 'layout.html' %}
 {% load static %}
 
+{% block dependencies %}
+  {% include 'main-deps.html' %}
+{% endblock %}
+
 {% block content %}
   <form class="bug-form" method="post" autocomplete="off">
     {% csrf_token %}

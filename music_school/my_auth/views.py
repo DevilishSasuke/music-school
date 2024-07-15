@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import RegistrationForm, LoginForm 
+from django.contrib import messages
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import auth
@@ -17,7 +18,11 @@ def register(request):
 
         return redirect("/")
       except Exception as e:
-        pass
+        messages.error(request, f"An error occurred: {e}")
+    else:
+      for _, errors in form.errors.items():
+        for error in errors:
+          messages.error(request, f"{error}")
   
   data = {
     "title": "Регистрация",
@@ -33,13 +38,21 @@ def login(request):
     form = LoginForm(request, data = request.POST)
 
     if form.is_valid():
-      user_email = request.POST.get("user_email")
-      password = request.POST.get("password")
+      username = form.cleaned_data.get("username")
+      password = form.cleaned_data.get("password")
 
-      user = authenticate(request, user_email=user_email, password=password)
+      user = authenticate(request, username=username, password=password)
       if user is not None:
         auth.login(request, user)
         return redirect("/")
+      else:
+        for _, errors in form.errors.items():
+          for error in errors:
+            messages.error(request, f"{error}")
+    else:
+      for _, errors in form.errors.items():
+        for error in errors:
+          messages.error(request, f"{error}")
 
   data = {
     "title": "Вход в систему",

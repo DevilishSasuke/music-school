@@ -1,0 +1,19 @@
+.message-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 38%;
+  bottom: 10%;
+  width: 24%;
+}
+
+.messages {
+  background-color: rgba(255, 0, 0, 0.2);
+  color: #a94442;
+  border-radius: 10px;
+  text-align: center;
+  padding: 10px;
+  flex: 1;
+  margin: 5px;
+  font-size: 2rem;
+}

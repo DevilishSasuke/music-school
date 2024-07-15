@@ -1,12 +1,17 @@
 {% extends 'layout.html' %}
 {% load static %}
 
+{% block dependencies %}
+  {% include 'auth-deps.html' %}
+{% endblock %}
+
 {% block content %}
   <form name="login_form" id="login_form" class="auth_form"
     method="post" autocomplete="off">
     {% csrf_token %}
-    {{ form.user_email }}
-    {{ form.password }}
-    <input type="submit" value="Войти" id="submit-button" />
+    {% for field in form %}
+      {{ field }}
+    {% endfor %}
+    <button type="submit" id="submit-button" class="btn btn-success">Войти</button>
     </form>
 {% endblock %}

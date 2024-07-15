@@ -1,13 +1,15 @@
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.models import User
-from django.forms import CharField, TextInput, PasswordInput
+from django.forms import CharField, TextInput, PasswordInput, ChoiceField
+
+from main.models import MyUser
+
 
 class RegistrationForm(UserCreationForm):
-  user_email = CharField(widget=
+  username = CharField(widget=
     TextInput(attrs={
-        "id": "email",
-        "name": "user_email",
-        "placeholder": "myemail@gmail.com",
+        "id": "username",
+        "name": "username",
+        "placeholder": "username",
       })
   )
 
@@ -29,21 +31,28 @@ class RegistrationForm(UserCreationForm):
       })
   )
 
+  ROLE_CHOICES = [
+        (False, 'Ученик'),
+        (True, 'Учитель'),
+    ]
+  is_teacher = ChoiceField(choices=ROLE_CHOICES)
+
   class Meta:
 
-        model = User
+        model = MyUser
         fields = [
-            "user_email",
+            "username",
             "password1",
             "password2",
+            "is_teacher",
         ]
 
 class LoginForm(AuthenticationForm):
-  user_email = CharField(widget=
+  username = CharField(widget=
     TextInput(attrs={
-        "id": "email",
-        "name": "user_email",
-        "placeholder": "myemail@gmail.com",
+        "id": "username",
+        "name": "username",
+        "placeholder": "username",
       })
   )
 
@@ -55,9 +64,3 @@ class LoginForm(AuthenticationForm):
                 "placeholder": "password",
       })
   )
-
-  class Meta:
-     fields = [
-        "user_email",
-        "password"
-     ]
