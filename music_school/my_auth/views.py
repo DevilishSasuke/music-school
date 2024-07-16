@@ -18,7 +18,7 @@ def register(request):
     if form.is_valid():
       try:
         form.save()
-        return redirect("/")
+        return redirect("login")
       except Exception as e:
         messages.error(request, f"An error occurred: {e}")
     else:

@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from .forms import BugForm
 
+from .models import MyUser
+
 from django.core.mail import send_mail
 
 from dotenv import load_dotenv
@@ -19,9 +21,12 @@ def home(request):
 
 @login_required
 def profile(request):
+  username = request.user.username
+  user = MyUser.get_user_by_username(username=username)
 
   data = {
     "title": "Мой профиль",
+    "user": user,
   }
 
   return render(request, 'profile.html', data)
