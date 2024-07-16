@@ -20,3 +20,17 @@
   font-size: 2rem;
 }
 
+.redirection {
+  display: flex;
+  align-items: center;
+}
+
+.redirection > b {
+  flex: 4;
+}
+
+.redirection > button {
+  flex: 1;
+  min-width: 50%;
+}
+

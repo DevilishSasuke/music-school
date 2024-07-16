@@ -7,6 +7,9 @@ from django.contrib.auth.models import auth
 
 
 def register(request):
+  if request.user.is_authenticated:
+    return redirect("home")
+  
   form = RegistrationForm()
 
   if (request.method == "POST"):
@@ -15,7 +18,6 @@ def register(request):
     if form.is_valid():
       try:
         form.save()
-
         return redirect("/")
       except Exception as e:
         messages.error(request, f"An error occurred: {e}")
@@ -32,6 +34,9 @@ def register(request):
   return render(request, "register.html", data)
 
 def login(request):
+  if request.user.is_authenticated:
+    return redirect("home")
+
   form = LoginForm()
 
   if request.method == "POST":
@@ -63,4 +68,4 @@ def login(request):
 
 def logout(request):
   auth.logout(request)
-  return redirect("/")
+  return redirect("home")

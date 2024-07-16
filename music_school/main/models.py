@@ -12,17 +12,3 @@ class MyUser(AbstractUser):
 
   def __str__(self):
     return f"{self.username}"
-  
-  
-  
-'''
-class Pupil(Person):
-  class Meta:
-        verbose_name = "Ученик"
-        verbose_name_plural = "Ученики"
-
-class Teacher(Person):
-  class Meta:
-        verbose_name = "Учитель"
-        verbose_name_plural = "Учители"
-'''

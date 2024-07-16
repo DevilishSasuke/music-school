@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 from .forms import BugForm
 
 from django.core.mail import send_mail
@@ -8,7 +9,6 @@ from os import getenv
 
 load_dotenv()
 
-# Create your views here.
 def home(request): 
 
   data = {
@@ -17,14 +17,16 @@ def home(request):
 
   return render(request, 'home.html', data)
 
+@login_required
 def profile(request):
 
   data = {
     "title": "Мой профиль",
   }
 
-  return render(request, 'layout.html', data)
+  return render(request, 'profile.html', data)
 
+@login_required
 def calendar(request):
   
   data = {
@@ -33,6 +35,7 @@ def calendar(request):
 
   pass
 
+@login_required
 def chat(request):
 
   data = {
@@ -41,6 +44,7 @@ def chat(request):
 
   pass
 
+@login_required
 def lessons(request):
 
   data = {
@@ -49,6 +53,7 @@ def lessons(request):
   
   pass
 
+@login_required
 def rating(request):
 
   data = {
@@ -57,6 +62,7 @@ def rating(request):
 
   pass
 
+@login_required
 def pay(request):
 
   data = {
@@ -81,7 +87,6 @@ def bug(request):
   }
 
   return render(request, 'bug.html', data)
-
 
 
 def send_bug_report(email, text):
