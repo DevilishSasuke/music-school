@@ -1,0 +1,11 @@
+.home-button {
+  overflow: hidden;
+  width: 30vw;
+  height: 25vh;
+  font-size: 4rem;
+  font-weight: 600;
+  border: 0px;
+  border-radius: 15px;
+  color: black;
+  margin: 10px 15px;
+}

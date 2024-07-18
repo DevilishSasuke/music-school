@@ -3,6 +3,7 @@
 
 {% block dependencies %}
   {% include 'main-deps.html' %}
+  <link rel="stylesheet" href="{% static 'main/css/profile.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -18,16 +19,12 @@
         {% if user.last_name or user.first_name %}
           <p> 
             {% if user.last_name %}
-              {{ user.lastname }}
+              {{ user.last_name }}
             {% endif %}
             {% if user.first_name %}
               {{ user.first_name }}
             {% endif %} 
           </p>
-        {% else %} <br>
-        {% endif %}
-        {% if user.middle_name %}
-          <p> {{ user.middle_name }} </p>
         {% else %} <br>
         {% endif %}
         <br>
@@ -38,10 +35,30 @@
           <br><br>
         {% endif %}
       </div>
-      <div class="user-edit">
-        <button class="btn btn-warning" style="background-color: #e61610;" 
-        onclick="location.href='{% url 'logout'%}'">Temp logout</button>
-      </div>
+      {% if is_owner %}
+        <div class="user-edit">
+          <form method="post">
+            {% csrf_token %}
+
+            {% for field in form %}
+              {{ field }}
+            {% endfor %}
+
+            <button type="submit" class="btn btn-success">
+              Сохранить изменения
+            </button>
+          </form>
+          <button class="btn btn-warning" style="background-color: #e61610;" 
+          onclick="location.href='{% url 'logout'%}'">Выйти из профиля</button>
+        </div>
+      {% else %}
+        <div class="user-edit">
+          <button class="btn btn-warning" style="background-color: #e61610;" 
+          onclick="location.href='{% url 'logout'%}'">Написать сообщение</button>
+          <button class="btn btn-warning" style="background-color: #e61610;" 
+          onclick="location.href='{% url 'logout'%}'">Оценить профиль</button>
+        </div>
+      {% endif %}
     </div>
   {% endif %}
 {% endblock %}

@@ -3,11 +3,12 @@
 
 {% block dependencies %}
   {% include 'main-deps.html' %}
+  <link rel="stylesheet" href="{% static 'main/css/home.css' %}">
 {% endblock %}
 
 {% block content %} 
   <div class="home-row">
-    <button class="home-button" style="background-color: #f0ad4e;" onclick="location.href='{% url 'profile'%}'">
+    <button class="home-button" style="background-color: #f0ad4e;" onclick="location.href='{% url 'own-profile' %}'">
       ПРОФИЛЬ <i class="fa-regular fa-circle-user"></i>
     </button>
     <button class="home-button" style="background-color: #e61610;" onclick="location.href='{% url 'calendar'%}'">

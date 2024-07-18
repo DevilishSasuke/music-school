@@ -1,6 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .forms import BugForm
+from .forms import BugForm, UserInfoForm
 
 from .models import MyUser
 
@@ -12,21 +12,50 @@ from os import getenv
 load_dotenv()
 
 def home(request): 
+  if request.user.is_authenticated:
+    username = request.user.username
+  else:
+    username = ''
 
   data = {
     "title": "Главная страница",
+    "username": username,
   }
 
   return render(request, 'home.html', data)
 
 @login_required
-def profile(request):
+def own_profile(request):
   username = request.user.username
+  link = "/profile/" + username
+
+  return redirect(link)
+
+@login_required
+def profile(request, username):
+  profile_name = request.user.username
+  is_owner = username == profile_name
   user = MyUser.get_user_by_username(username=username)
+
+  form = None
+
+  if is_owner:
+    if request.method == "POST":
+      form = UserInfoForm(request.POST, instance=request.user)
+
+      if form.is_valid():
+        form.save()
+        return redirect("home")
+      else:
+        return redirect("bug")
+    else:
+      form = UserInfoForm(instance=request.user)
 
   data = {
     "title": "Мой профиль",
     "user": user,
+    "form": form,
+    "is_owner": is_owner,
   }
 
   return render(request, 'profile.html', data)
