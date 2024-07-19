@@ -1,6 +1,7 @@
 from django.forms import Form, ModelForm, CharField, \
   TextInput, Textarea, \
-  DateField, DateInput
+  DateField, DateInput, \
+  IntegerField, HiddenInput
 from .models import MyUser
 
 class UserInfoForm(ModelForm):
@@ -70,6 +71,13 @@ class UserInfoForm(ModelForm):
     model = MyUser
     fields = ["last_name", "first_name", "middle_name", 
               "email", "phone", "birth_date"]
+
+class RateForm(Form):
+  rating = IntegerField(
+      min_value=1,
+      max_value=5,
+      widget=HiddenInput()
+    )
 
 class BugForm(Form):
   user_email = CharField(

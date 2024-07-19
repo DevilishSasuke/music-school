@@ -1,0 +1,28 @@
+{% load static %}
+<div class="user-info">
+  {% if user.is_teacher %}
+    <img src="{% static 'img/teacher.jfif' %}" alt="teacher-img">
+  {% else %}
+    <img src="{% static 'img/pupil.jfif' %}" alt="teacher-img">
+  {% endif %}
+  <b><p> {{ user.username }} </p></b>
+  <p> 
+      {{ user.last_name }}
+      {{ user.first_name }}
+  </p>
+  {% if user.last_online %}
+    <b><p>Last online</p></b>
+    <p>{{ user.last_online }}</p>
+  {% else %}
+    <br><br>
+  {% endif %}
+  <b><p>Rating</p></b>
+  <div class="star-rating">
+    <div class="star-rating_back">
+        ★★★★★
+    </div>
+    <div class="star-rating_front" style="width: {{ user.rating_percentage }}%">
+        ★★★★★
+    </div>
+ </div>
+</div>

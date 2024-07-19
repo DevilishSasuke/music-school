@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .forms import BugForm, UserInfoForm
+from .forms import UserInfoForm, BugForm, RateForm
 
-from .models import MyUser
+from .models import MyUser, RatingLog
 
 from django.core.mail import send_mail
+from django.contrib import messages
 
 from dotenv import load_dotenv
 from os import getenv
@@ -45,9 +46,7 @@ def profile(request, username):
 
       if form.is_valid():
         form.save()
-        return redirect("home")
-      else:
-        return redirect("bug")
+        return redirect("own-profile")
     else:
       form = UserInfoForm(instance=request.user)
 
@@ -95,6 +94,39 @@ def rating(request):
   }
 
   pass
+
+@login_required
+def rate(request, username):
+  # cannot rate urself
+  if username == request.user.username:
+    return redirect("home")
+  
+  user = MyUser.get_user_by_username(username=username)
+
+  form = RateForm()
+  if user:
+    if request.method == "POST":
+      log = RatingLog.get_rate_log(sender_name=request.user.username, reciever_name=username)
+      form = RateForm(request.POST)
+      # cannot be more than 1 user rate
+      if log:
+        messages.error(request, f'User {log.sender} already rated user {log.reciever}: {log.rating}')
+        return redirect("rate", username=username)
+      if form.is_valid():
+        rating = int(form.cleaned_data["rating"])
+        user.total_rating += rating
+        user.rating_count += 1
+        user.save()
+        RatingLog.objects.create(sender=request.user.username, reciever=username, rating=rating)
+        return redirect("home")
+      
+  data = {
+    "title": "Оценить " + username,
+    "user": user,
+    "form": form,
+  }
+
+  return render(request, 'rate.html', data)
 
 @login_required
 def pay(request):

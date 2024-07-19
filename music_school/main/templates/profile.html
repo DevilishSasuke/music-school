@@ -8,33 +8,9 @@
 
 {% block content %}
   {% if user %}
-    <div class="user-data" style="display: flex;">
-      <div class="user-info">
-        {% if user.is_teacher %}
-          <img src="{% static 'img/teacher.jfif' %}" alt="teacher-img">
-        {% else %}
-          <img src="{% static 'img/pupil.jfif' %}" alt="teacher-img">
-        {% endif %}
-        <p> {{ user.username }} </p>
-        {% if user.last_name or user.first_name %}
-          <p> 
-            {% if user.last_name %}
-              {{ user.last_name }}
-            {% endif %}
-            {% if user.first_name %}
-              {{ user.first_name }}
-            {% endif %} 
-          </p>
-        {% else %} <br>
-        {% endif %}
-        <br>
-        {% if user.last_online %}
-          <b> Last online </b>
-          <p> {{ user.last_online }} </p>
-        {% else %}
-          <br><br>
-        {% endif %}
-      </div>
+    <div class="user-data">
+      {% include 'user-profile.html' %}
+      <!-- if it is account owner he can change his information -->
       {% if is_owner %}
         <div class="user-edit">
           <form method="post">
@@ -44,19 +20,19 @@
               {{ field }}
             {% endfor %}
 
-            <button type="submit" class="btn btn-success">
+            <button type="submit" class="btn btn-success" style="font-size: 30px">
               Сохранить изменения
             </button>
           </form>
-          <button class="btn btn-warning" style="background-color: #e61610;" 
+          <button class="btn btn-danger"  
           onclick="location.href='{% url 'logout'%}'">Выйти из профиля</button>
         </div>
       {% else %}
-        <div class="user-edit">
-          <button class="btn btn-warning" style="background-color: #e61610;" 
-          onclick="location.href='{% url 'logout'%}'">Написать сообщение</button>
-          <button class="btn btn-warning" style="background-color: #e61610;" 
-          onclick="location.href='{% url 'logout'%}'">Оценить профиль</button>
+        <div class="user-edit" style="display: flex; flex-direction: column;  justify-content: center;align-items: center;">
+          <button class="btn redir" style="background-color: #e692f8;"
+          onclick="location.href='{% url 'logout'%}'">НАПИСАТЬ СООБЩЕНИЕ <i class="fa-regular fa-message"></i></button>
+          <button class="btn redir" style="background-color: #868282;" 
+          onclick="location.href='{% url 'rate' user.username %}'">ОЦЕНИТЬ ПРОФИЛЬ <i class="fa-regular fa-star"></i></button>
         </div>
       {% endif %}
     </div>

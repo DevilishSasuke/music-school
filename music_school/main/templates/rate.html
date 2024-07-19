@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block dependencies %}
+  {% include 'main-deps.html' %}
+  <link rel="stylesheet" href="{% static 'main/css/profile.css' %}">
+  <link rel="stylesheet" href="{% static 'main/css/rate.css' %}">
+{% endblock %}
+
+{% block content %}
+  {% if user %}
+    <div class="user-data">
+      {% include 'user-profile.html' %}
+      <div class="user-edit">
+        <form method="post">
+          {% csrf_token %}
+          <b><p style="font-size: 10rem;">Оценка</p></b>
+          <div class="stars">
+            <input type="radio" id="star-5" name="rating" value="5"><label for="star-5" class="fa fa-star"></label>
+            <input type="radio" id="star-4" name="rating" value="4"><label for="star-4" class="fa fa-star"></label>
+            <input type="radio" id="star-3" name="rating" value="3"><label for="star-3" class="fa fa-star"></label>
+            <input type="radio" id="star-2" name="rating" value="2"><label for="star-2" class="fa fa-star"></label>
+            <input type="radio" id="star-1" name="rating" value="1"><label for="star-1" class="fa fa-star"></label>
+          </div>
+          <button class="btn btn-success" type="submit">Подтвердить</button>
+        </form>
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}
