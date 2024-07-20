@@ -88,12 +88,15 @@ def lessons(request):
 
 @login_required
 def rating(request):
+  users = MyUser.objects.all()
+  users = sorted(users, key=lambda user: user.rating, reverse=True)
 
   data = {
     "title": "Рейтинг учителей",
+    "users": users,
   }
 
-  pass
+  return render(request, "rating.html", data)
 
 @login_required
 def rate(request, username):

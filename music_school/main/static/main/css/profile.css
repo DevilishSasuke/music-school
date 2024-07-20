@@ -56,27 +56,6 @@
   margin: 10px;
 }
 
-.star-rating {
-  display: inline-block;
-  font-size: 5rem;
-  font-family: 'Arial', sans-serif;
-  position: relative;
-  margin-top: -40px;
-}
-
-.star-rating_back {
-  color: #ccc; /* цвет незаполненных звезд */
-}
-
-.star-rating_front {
-  color: #ffc107; /* цвет заполненных звезд */
-  position: absolute;
-  top: 0;
-  left: 0;
-  overflow: hidden;
-  white-space: nowrap;
-}
-
 .user-edit > .redir {
   width: 90%;
   font-size: 3rem;

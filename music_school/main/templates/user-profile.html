@@ -7,8 +7,12 @@
   {% endif %}
   <b><p> {{ user.username }} </p></b>
   <p> 
-      {{ user.last_name }}
-      {{ user.first_name }}
+    {% if user.last_name %}
+      {{ user.last_name }} 
+    {% endif %}
+    {% if user.first_name %}
+      {{ user.first_name }} 
+    {% endif %}
   </p>
   {% if user.last_online %}
     <b><p>Last online</p></b>
@@ -24,5 +28,5 @@
     <div class="star-rating_front" style="width: {{ user.rating_percentage }}%">
         ★★★★★
     </div>
- </div>
+  </div>
 </div>

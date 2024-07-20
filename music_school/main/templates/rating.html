@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block dependencies %}
+  {% include 'main-deps.html' %}
+  <link rel="stylesheet" href="{% static 'main/css/profile.css' %}">
+  <link rel="stylesheet" href="{% static 'main/css/rating.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="rating-table">
+    <div class="rating-table-header">
+      <div id="profile"> Профиль </div>
+      <div id="username"> Имя пользователя </div>
+      <div id="fio"> Фамилия Имя Отчество </div>
+      <div id="rating"> Рейтинг </div>
+      <div id="amount"> Кол-во оценивших </div>
+    </div>
+    {% if users %}
+      {% for user in users %}
+        <div class="rt-row">
+          <div id="profile">
+            <a href="{% url 'profile' user.username %}">
+              {% if user.is_teacher %}
+              <img src="{% static 'img/teacher.jfif' %}" alt="teacher-img" id="profile-pic">
+              {% else %}
+              <img src="{% static 'img/pupil.jfif' %}" alt="teacher-img" id="profile-pic">
+              {% endif %}
+            </a>
+          </div>
+          <div id="username"> {{ user.username }} </div>
+          <div id="fio">
+          {% if user.last_name %}
+            {{ user.last_name }} 
+          {% endif %}
+          {% if user.first_name %}
+            {{ user.first_name }} 
+          {% endif %}
+          {% if user.middle_name %}
+            {{ user.middle_name }} 
+          {% endif %}
+          </div>
+          <div id="rating" style="font-size: 2.2rem;">
+            <div class="star-rating" style="margin-top: -2%; margin-right: 30px;">
+              <div class="star-rating_back">
+                  ★★★★★
+              </div>
+              <div class="star-rating_front" style="width: {{ user.rating_percentage }}%">
+                  ★★★★★
+              </div>
+            </div>
+            {{ user.rating }} 
+          </div>
+          <div id="amount"> {{ user.rating_count }} </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+{% endblock %}

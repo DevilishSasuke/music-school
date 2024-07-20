@@ -16,7 +16,7 @@ class MyUser(AbstractUser):
   @property
   def rating(self):
     if self.rating_count == 0:
-      return self.total_rating
+      return 0.0
     return round(self.total_rating / self.rating_count, 2)
   
   @property

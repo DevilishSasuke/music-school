@@ -1,0 +1,121 @@
+.rating-table {
+  display: grid;
+}
+
+.rating-table-header, .rt-row {
+  display: flex;
+  align-items: center;
+}
+
+.rating-table-header {
+  background-color: rgba(93, 148, 199, 0.6);
+  border-radius: 20px;
+  font-size: 1.5rem;
+}
+
+#profile, #username {
+  flex: 1.5;
+}
+
+#amount {
+  flex: 1.8;
+}
+
+#fio, #rating {
+  flex: 3;
+}
+
+.rating-table-header div {
+  margin: 0.5% 0%;
+  font-weight: 700;
+}
+
+.rt-row {
+  margin-top: 0.5%;
+}
+
+.rt-row > div {
+  width: 100%;
+  height: 100%;
+  font-weight: 500;
+  font-size: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rt-row > #profile {
+  background-color: #ccc;
+  border-radius: 50px 0px 0px 50px;
+}
+
+#profile-pic {
+  width: 70%;
+  margin: 20px;
+}
+
+.rt-row > #username {
+  background-color: #bbb;
+}
+
+.rt-row > #fio {
+  background-color: #aaa;
+}
+
+.rt-row > #rating {
+  background-color: #999;
+}
+
+.rt-row > #amount {
+  background-color: #888;
+  border-radius: 0px 50px 50px 0px;
+}
+
+.star-rating {
+  display: inline-block;
+  font-size: 5rem;
+  font-family: 'Arial', sans-serif;
+  position: relative;
+  margin-top: -40px;
+}
+
+.star-rating_back {
+  color: #ccc; /* цвет незаполненных звезд */
+}
+
+.star-rating_front {
+  color: #ffc107; /* цвет заполненных звезд */
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.stars {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  padding: 1rem;
+}
+.stars input {
+  display: none;
+}
+.stars label {
+  font-size: 8rem;
+  color: #ccc;
+  cursor: pointer;
+}
+.stars input:checked ~ label,
+.stars label:hover,
+.stars label:hover ~ label {
+  color: #ffd700;
+}
+
+.user-edit > form > button {
+  width: 70%; 
+  font-size: 3rem; 
+  padding: 20px; 
+  margin: auto;
+  margin-top: 5%;
+}

@@ -10,7 +10,7 @@ urlpatterns = [
   path('chat/', views.chat, name='chat'),
   path('lessons/', views.lessons, name='lessons'),
   path('rating/', views.rating, name='rating'),
-  path('rate/<str:username>', views.rate, name='rate'),
+  path('profile/<str:username>/rate', views.rate, name='rate'),
   path('pay/', views.pay, name='pay'),
   path('bug/', views.bug, name='bug'),
 ]
