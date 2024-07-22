@@ -25,14 +25,7 @@ def home(request):
 
   return render(request, 'home.html', data)
 
-@login_required
-def calendar(request):
-  
-  data = {
-    "title": "Календарь заданий",
-  }
 
-  pass
 
 @login_required
 def chat(request):
@@ -43,14 +36,7 @@ def chat(request):
 
   pass
 
-@login_required
-def lessons(request):
 
-  data = {
-    "title": "Мои уроки",
-  }
-  
-  pass
 
 def rating(request):
   users = MyUser.objects.all()

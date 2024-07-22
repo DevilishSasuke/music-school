@@ -1,6 +1,7 @@
 from pathlib import Path
 from dotenv import load_dotenv
 from os import getenv
+import os
 
 
 load_dotenv()
@@ -26,6 +27,8 @@ INSTALLED_APPS = [
     'main',
     'my_auth',
     'my_profile',
+    'lessons',
+    
 ]
 
 MIDDLEWARE = [
@@ -122,3 +125,6 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = getenv("CORPORATE_EMAIL")
 EMAIL_HOST_PASSWORD = getenv("CORPORATE_EMAIL_PASS")
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
