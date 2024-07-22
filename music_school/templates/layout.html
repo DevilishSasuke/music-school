@@ -19,6 +19,10 @@
     <link rel="stylesheet" href="{% static 'css/error_msg.css' %}">
     {% block dependencies %}
     {% endblock %}
+    <style>
+      {% block style %}
+      {% endblock %}
+    </style>
 </head>
 <body>
   {% include 'top-menu.html' %}

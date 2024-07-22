@@ -18,9 +18,9 @@ def profile(request, username):
   profile_name = request.user.username
   is_owner = username == profile_name
   user = MyUser.get_user_by_username(username=username)
-
   form = None
 
+  # show owner form with completed info
   if is_owner:
     if request.method == "POST":
       form = UserInfoForm(request.POST, instance=request.user)
@@ -42,7 +42,7 @@ def profile(request, username):
 
 @login_required
 def rate(request, username):
-  # cannot rate urself
+  # can't rate urself
   if username == request.user.username:
     return redirect("home")
   
@@ -53,10 +53,12 @@ def rate(request, username):
     if request.method == "POST":
       log = RatingLog.get_rate_log(sender_name=request.user.username, reciever_name=username)
       form = RateForm(request.POST)
-      # cannot be more than 1 user rate
+
+      # can't rate the same user twice or more times
       if log:
         messages.error(request, f'User {log.sender} already rated user {log.reciever}: {log.rating}')
         return redirect("rate", username=username)
+      
       if form.is_valid():
         rating = int(form.cleaned_data["rating"])
         user.total_rating += rating

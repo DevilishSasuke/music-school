@@ -1,23 +1,22 @@
-from django.shortcuts import render, redirect
+from django.core.mail import send_mail # mail sender for bugs
+from django.contrib import messages # error messages on page
+
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+
+#environment vars
+from dotenv import load_dotenv
+from os import getenv
 
 from .forms import BugForm
 
 from .models import MyUser
 
-from django.core.mail import send_mail
-from django.contrib import messages
 
-from dotenv import load_dotenv
-from os import getenv
+load_dotenv() # load all env vars
 
-load_dotenv()
-
-def home(request): 
-  if request.user.is_authenticated:
-    username = request.user.username
-  else:
-    username = ''
+def home(request):
+  username = request.user.username
 
   data = {
     "title": "Главная страница",
@@ -53,7 +52,6 @@ def lessons(request):
   
   pass
 
-@login_required
 def rating(request):
   users = MyUser.objects.all()
   users = sorted(users, key=lambda user: user.rating, reverse=True)
@@ -64,8 +62,6 @@ def rating(request):
   }
 
   return render(request, "rating.html", data)
-
-
 
 @login_required
 def pay(request):
@@ -79,10 +75,14 @@ def pay(request):
 def bug(request):
   if  request.method == 'POST':
     form = BugForm(request.POST)
+
     if form.is_valid():
       user_email = form.cleaned_data['user_email']
       user_msg = form.cleaned_data['text']
       send_bug_report(user_email, user_msg)
+      messages.error(request, f'Спасибо за ваше обращение, {user_email}')
+      return redirect("/bug")
+
 
   form = BugForm()
 
