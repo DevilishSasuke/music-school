@@ -9,6 +9,7 @@ extensions = [
    "mp3", "wav", "flac", "m4a", # audio files
    "mp4", "mov", "avi", "mkv", # video files
    "zip", "rar", # archived files
+   "html", "htm", "xml", "json" # files for meta data
 ]
 
 def lessons_file_path(instance, filename):

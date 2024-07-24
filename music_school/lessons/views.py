@@ -58,7 +58,7 @@ def add_lesson(request):
   
   form = LessonForm()
   if request.method == "POST":
-    form = LessonForm(request.POST)
+    form = LessonForm(request.POST, request.FILES)
 
     if form.is_valid():
       lesson = form.save(commit=False)
