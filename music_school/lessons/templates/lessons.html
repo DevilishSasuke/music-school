@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block dependencies %}
+  <link rel="stylesheet" href="{% static 'my_profile/css/profile.css' %}">
+  <link rel="stylesheet" href="{% static 'lessons/css/lessons.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="user-data" style="flex-direction: column;">
+    <div class="user-info" style="flex: 8;">
+      <div class="lessons-container">
+        {% for lesson in lessons %}
+          <a href="{% url 'lesson' lesson.id %}">
+            <div class="lesson-info">
+              <b><p id="date"> {{ lesson.date|date:"d.m.y" }} 
+                <br> {{ lesson.date|time:"H:i" }} 
+              </p></b>
+              <p id="teacher-name"> {{ lesson.teacher }} </p>
+              <p id="title"> {{ lesson.title|slice:":20" }} </p>
+            </div>
+          </a>
+        {% endfor %}
+        {% for i in empty_slots %}
+          <div class="lesson-info empty">
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% if user.is_teacher %}
+      <button class="btn btn-success add-lesson-btn" onclick="location.href='{% url 'add-lesson' %}'">
+        Добавить новый урок
+      </button>
+    {% endif %}
+    <div class="user-edit" style="flex: 2;">
+    </div>
+  </div>
+{% endblock %}

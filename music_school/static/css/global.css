@@ -12,3 +12,12 @@
   text-align: center;
   display: block;
 }
+
+.box-container {
+  margin: 10px;
+  margin-top: 1%;
+  border: 3px solid black;
+  border-radius: 10px;
+  font-family: "Montserrat";
+  padding: 20px;
+}

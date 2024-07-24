@@ -11,5 +11,13 @@ class Lesson(models.Model):
   description = models.TextField(blank=True, null=True)
   file = models.FileField(upload_to=lessons_file_path, null=True, blank=True)
 
+  @property
+  def get_date(self):
+     return self.date.date()
+  
+  @property
+  def get_time(self):
+    return self.date.time()
+
   def __str__(self):
     return f'{self.title} - {self.teacher} - {self.date}'
