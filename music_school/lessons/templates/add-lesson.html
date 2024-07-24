@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block dependencies %}
+  <link rel="stylesheet" href="{% static 'my_profile/css/profile.css' %}">
+  <link rel="stylesheet" href="{% static 'lessons/css/lessons.css' %}">
+{% endblock %}
+
+{% block content %}
+  <form class="lesson-form" method="post" autocomplete="off">
+    {% csrf_token %}
+    <p> Название урока </p>
+    {{ form.title }}
+    <p> Описание урока </p>
+    {{ form.description }}
+    <p> Дата проведения урока </p>
+    {{ form.date }}
+    <p> Прикрепленный к уроку файл </p>
+    {{ form.file }}
+    <button type="submit" class="btn btn-success"> Добавить урок </button>
+  </form>
+{% endblock %}
