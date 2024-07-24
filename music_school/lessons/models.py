@@ -32,6 +32,10 @@ class Lesson(models.Model):
   def get_time(self):
     return self.date.time()
   
+  @property
+  def file_path(self, filename):
+    return f'lessons_files/{self.id}/{filename}'
+  
   def get_lesson_by_id(lesson_number):
     try:
         lesson = Lesson.objects.get(id=lesson_number)

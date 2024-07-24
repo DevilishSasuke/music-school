@@ -61,9 +61,18 @@ def add_lesson(request):
     form = LessonForm(request.POST, request.FILES)
 
     if form.is_valid():
-      lesson = form.save(commit=False)
-      lesson.teacher = request.user.username
+      cur_form = form.save(commit=False)
+      lesson = Lesson.objects.create(
+        teacher=request.user.username,
+        date=cur_form.date,
+        title=cur_form.title,
+        description=cur_form.description
+      )
+
+      if "file" in request.FILES:
+        lesson.file = request.FILES["file"]
       lesson.save()
+
       return redirect("lessons")
     else:
       for _, errors in form.errors.items():
