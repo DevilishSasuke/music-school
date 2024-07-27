@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block dependencies %}
+  <link rel="stylesheet" href="{% static 'my_profile/css/profile.css' %}">
+  <link rel="stylesheet" href="{% static 'lessons/css/lessons.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="lesson-info">
+  <header class="title"><b>Урок #{{ lesson.id }}<br>
+    <i>{{ lesson.title }}</i></b></header>
+  <br>
+  <h2>Описание урока</h2>
+  <textarea disabled rows="2">{{ lesson.description }}</textarea>
+  <h2>Учитель, проводящий урок</h2>
+  <a href="{% url 'profile' lesson.teacher %}"><p>{{ lesson.teacher }}</p></a>
+  <h2>Дата проведения</h2>
+  <p>{{ lesson.date }}</p>
+  {% if lesson.file %}
+  <h2>Прикрепленный файл</h2>
+  <a href="{{ lesson.file.url }}" download="{{ lesson.file.name }}">Скачать</a>
+  {% endif %}
+</div>
+{% endblock %}

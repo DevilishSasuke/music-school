@@ -16,7 +16,7 @@
     <p> Дата проведения урока </p>
     {{ form.date }}
     <p> Прикрепленный к уроку файл </p>
-    {{ form.file }}
-    <button type="submit" class="btn btn-success"> Добавить урок </button>
+    <div class="file-input">{{ form.file }}</div>
+    <button type="submit" class="btn btn-success"> Сохранить урок </button>
   </form>
 {% endblock %}

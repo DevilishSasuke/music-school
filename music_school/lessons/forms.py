@@ -8,6 +8,6 @@ class LessonForm(ModelForm):
     model = Lesson
     fields = ["teacher", "date", "title", "description", "file"]
     widgets = {
-            'date': DateTimeInput(attrs={'type': 'datetime-local'}),
+            'date': DateTimeInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
             'description': Textarea(attrs={'rows': '3'}),
         }

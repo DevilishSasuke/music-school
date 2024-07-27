@@ -38,16 +38,40 @@ def calendar(request):
 def lesson(request, number):
   user = MyUser.get_user_by_username(username=request.user.username)
   lesson = Lesson.get_lesson_by_id(number)
+  is_lesson_owner = request.user.username == lesson.teacher
 
   if not lesson:
-    return redirect("home") 
-
+    messages.error(request, f"No such a lesson")
+    return redirect("home")
+  
   data = {
-    "title": "Урок: ", #{lesson.title}
+    "title": "Урок: " + lesson.title[0:20],
     "user": user,
+    "lesson": lesson,
   } 
 
-  return render(request, "layout.html", data)
+  if not user.is_teacher:
+    return render(request, "lesson.html", data)
+
+  form = LessonForm(instance=lesson)
+  print(lesson.date)
+  if request.method == "POST":
+    form = LessonForm(request.POST, request.FILES, instance=lesson)
+
+    if form.is_valid():
+      cur_form = form.save(commit=False)
+      lesson.date = cur_form.date
+      lesson.title = cur_form.title
+      lesson.description = cur_form.description
+      if "file" in request.FILES:
+        lesson.file = request.FILES["file"]
+
+      lesson.save()
+      return redirect("lesson", lesson.id)
+
+  data["form"] = form
+
+  return render(request, "add-lesson.html", data)
 
 @login_required
 def add_lesson(request):

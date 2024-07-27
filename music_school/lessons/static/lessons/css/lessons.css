@@ -53,6 +53,7 @@
 
 .lesson-form > p {
   font-size: 2rem;
+  margin: 5px;
 }
 
 .lesson-form > button {
@@ -62,6 +63,7 @@
 }
 
 input[type="file"]::file-selector-button {
+  margin-left: 27%;
   border-radius: 4px;
   padding: 5px 16px;
   height: 55px;
@@ -79,4 +81,48 @@ input[type="file"]::file-selector-button:hover {
 
 input[type="file"]::file-selector-button:active {
   background-color: #e5e7eb;
+}
+
+.file-input * {
+  visibility: hidden;
+}
+
+.file-input #id_file, .file-input a {
+  visibility: visible;
+}
+
+.file-input a {
+  pointer-events: none;
+}  
+
+
+.lesson-info header {
+  font-size: 3rem;
+  margin-bottom: -1%;
+}
+
+.lesson-info a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.lesson-info textarea {
+  width: 50%;
+  margin-left: 25%;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  font-size: 2rem
+}
+
+.lesson-info h2 {
+  font-size: 1.5rem;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.lesson-info p {
+  font-size: 2rem;
 }

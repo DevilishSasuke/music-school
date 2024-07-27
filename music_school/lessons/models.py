@@ -44,4 +44,4 @@ class Lesson(models.Model):
         return None
 
   def __str__(self):
-    return f'{self.title} - {self.teacher} - {self.date}'
+    return f'{self.id}: {self.title} - {self.teacher} - {self.date}'

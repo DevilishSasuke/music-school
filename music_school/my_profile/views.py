@@ -20,6 +20,10 @@ def profile(request, username):
   user = MyUser.get_user_by_username(username=username)
   form = None
 
+  if not user:
+    messages.error(request, f"There is no such a user: {username}")
+    return redirect("home")
+
   # show owner form with completed info
   if is_owner:
     if request.method == "POST":
@@ -44,6 +48,7 @@ def profile(request, username):
 def rate(request, username):
   # can't rate urself
   if username == request.user.username:
+    messages.error(request, f'You can\'t rate yourself')
     return redirect("home")
   
   user = MyUser.get_user_by_username(username=username)
