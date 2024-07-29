@@ -3,7 +3,7 @@ from django.utils import timezone
 
 
 def validate_file_size(file):
-  limit = 1024 * 1024
+  limit = 1024 * 1024 * 1024
   if file.size > limit:
     raise ValidationError(f"Max file size is {limit} KB")
   

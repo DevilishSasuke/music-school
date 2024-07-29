@@ -68,6 +68,10 @@ def bug(request):
       send_bug_report(user_email, user_msg)
       messages.error(request, f'Спасибо за ваше обращение, {user_email}')
       return redirect("/bug")
+    else:
+      for _, errors in form.errors.items():
+        for error in errors:
+          messages.error(request, f"{error}")
 
 
   form = BugForm()

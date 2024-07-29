@@ -32,6 +32,10 @@ def profile(request, username):
       if form.is_valid():
         form.save()
         return redirect("own-profile")
+      else:
+        for _, errors in form.errors.items():
+          for error in errors:
+            messages.error(request, f"{error}")
     else:
       form = UserInfoForm(instance=request.user)
 
@@ -71,6 +75,10 @@ def rate(request, username):
         user.save()
         RatingLog.objects.create(sender=request.user.username, reciever=username, rating=rating)
         return redirect("home")
+      else:
+        for _, errors in form.errors.items():
+          for error in errors:
+            messages.error(request, f"{error}")
       
   data = {
     "title": "Оценить " + username,

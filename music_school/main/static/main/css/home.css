@@ -9,9 +9,3 @@
   color: black;
   margin: 10px 15px;
 }
-
-.messages {
-  background-color: rgba(255, 0, 0, 0.5);
-  color: white;
-  -webkit-text-stroke:1px black;
-}

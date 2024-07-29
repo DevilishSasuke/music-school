@@ -54,7 +54,6 @@ def lesson(request, number):
     return render(request, "lesson.html", data)
 
   form = LessonForm(instance=lesson)
-  print(lesson.date)
   if request.method == "POST":
     form = LessonForm(request.POST, request.FILES, instance=lesson)
 
@@ -68,6 +67,10 @@ def lesson(request, number):
 
       lesson.save()
       return redirect("lesson", lesson.id)
+    else:
+      for _, errors in form.errors.items():
+        for error in errors:
+          messages.error(request, f"{error}")
 
   data["form"] = form
 
