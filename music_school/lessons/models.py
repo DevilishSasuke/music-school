@@ -1,5 +1,7 @@
 from django.core.validators import FileExtensionValidator
 from django.db import models
+from django.utils import timezone
+import datetime
 
 from .validators import validate_file_size, validate_date_time
 
@@ -42,6 +44,18 @@ class Lesson(models.Model):
         return lesson
     except Lesson.DoesNotExist:
         return None
+    
+  def get_lessons_by_teacher(username):
+    try:
+      lessons = Lesson.objects.filter(teacher=username, date__gt=timezone.now())
+      return lessons
+    except Lesson.DoesNotExist:
+      return None
+    
+  def get_lessons_by_subscriptions(username):
+    teacher_list = None # get_teacher_list()
+
+    return None
 
   def __str__(self):
     return f'{self.id}: {self.title} - {self.teacher} - {self.date}'

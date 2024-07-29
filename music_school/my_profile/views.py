@@ -17,7 +17,10 @@ def own_profile(request):
 def profile(request, username):
   profile_name = request.user.username
   is_owner = username == profile_name
-  user = MyUser.get_user_by_username(username=username)
+  if is_owner:
+    user = request.user
+  else:
+    user = MyUser.get_user_by_username(username=username)
   form = None
 
   if not user:

@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils import timezone
 
 class MyUser(AbstractUser):
   last_name = models.CharField("Фамилия", max_length = 50, blank=True, null=True)
@@ -29,6 +30,10 @@ class MyUser(AbstractUser):
         return user
     except MyUser.DoesNotExist:
         return None
+    
+  def update_online(self):
+     self.last_online = timezone.now()
+     self.save()
 
   def __str__(self):
     return self.username

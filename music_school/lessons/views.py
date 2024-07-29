@@ -10,9 +10,19 @@ LESSON_AMOUNT_ON_PAGE = 3 * 2
 
 @login_required
 def lessons(request):
-  user = MyUser.get_user_by_username(username=request.user.username)
-  lessons = Lesson.objects.order_by('date')[:6]
-  empty_slots = [0] * (LESSON_AMOUNT_ON_PAGE - len(lessons))
+  user = request.user
+  user.update_online()
+
+  if user.is_teacher:
+    lessons = Lesson.get_lessons_by_teacher(user.username)
+  else:
+    lessons = Lesson.get_lessons_by_subscriptions(user.username)
+
+  if lessons:
+    lessons = lessons.order_by("date")[:6]
+    empty_slots = [0] * (LESSON_AMOUNT_ON_PAGE - len(lessons))
+  else:
+    empty_slots = [0] * LESSON_AMOUNT_ON_PAGE
 
   data = {
     "title": "Мои уроки",
@@ -36,7 +46,8 @@ def calendar(request):
 
 @login_required
 def lesson(request, number):
-  user = MyUser.get_user_by_username(username=request.user.username)
+  user = request.user
+  user.update_online()
   lesson = Lesson.get_lesson_by_id(number)
   is_lesson_owner = request.user.username == lesson.teacher
 
@@ -53,6 +64,10 @@ def lesson(request, number):
   if not user.is_teacher:
     return render(request, "lesson.html", data)
 
+  if not is_lesson_owner:
+    messages.error(request, "You have no right to check this page")
+    return redirect("home")
+  
   form = LessonForm(instance=lesson)
   if request.method == "POST":
     form = LessonForm(request.POST, request.FILES, instance=lesson)
@@ -78,7 +93,7 @@ def lesson(request, number):
 
 @login_required
 def add_lesson(request):
-  user = MyUser.get_user_by_username(username=request.user.username)
+  user = request.user
 
   if not user.is_teacher:
     return redirect("home")
