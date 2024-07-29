@@ -4,6 +4,7 @@ from django.utils import timezone
 import datetime
 
 from .validators import validate_file_size, validate_date_time
+from main.models import Subscription
 
 extensions = [
    "jpg", "jpeg", "png", "gif", "bmp", #image files 
@@ -53,9 +54,17 @@ class Lesson(models.Model):
       return None
     
   def get_lessons_by_subscriptions(username):
-    teacher_list = None # get_teacher_list()
+    teacher_list = Subscription.get_teacher_list(username)
 
-    return None
+    lessons = None
+    for teacher in teacher_list:
+      query = Lesson.get_lessons_by_teacher(teacher)
+      if not lessons:
+        lessons = query
+      else:
+        lessons = lessons | query
+
+    return lessons
 
   def __str__(self):
     return f'{self.id}: {self.title} - {self.teacher} - {self.date}'

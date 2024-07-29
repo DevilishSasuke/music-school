@@ -2,6 +2,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils import timezone
 
+
 class MyUser(AbstractUser):
   last_name = models.CharField("Фамилия", max_length = 50, blank=True, null=True)
   first_name = models.CharField("Имя", max_length = 50, blank=True, null=True)
@@ -40,30 +41,54 @@ class MyUser(AbstractUser):
 
 
 class Subscription(models.Model):
-   pupil = models.CharField(max_length=150,)
-   teacher = models.CharField(max_length=150,)
+  pupil = models.CharField(max_length=150,)
+  teacher = models.CharField(max_length=150,)
 
-   def get_sub(pupil, teacher):
-      try:
-         log = Subscription.objects.get(pupil=pupil, teacher=teacher)
-         return log
-      except Subscription.DoesNotExist:
-         return None
+  def get_sub(pupil, teacher):
+    try:
+        sub = Subscription.objects.get(pupil=pupil, teacher=teacher)
+        return sub
+    except Subscription.DoesNotExist:
+        return None
+      
+  def get_teacher_list(pupil):
+    teachers = []
+    try:
+      subs = Subscription.objects.filter(pupil=pupil)
+      for sub in subs:
+          teachers.append(sub.teacher)
+      return teachers
+    except Subscription.DoesNotExist:
+       return teachers
+    
+  def get_pupil_list(teacher):
+    pupils = []
+    try:
+      subs = Subscription.objects.filter(teacher=teacher)
+      for sub in subs:
+          pupils.append(sub.pupil)
+      return pupils
+    except Subscription.DoesNotExist:
+       return pupils
+    
+  def __str__(self):
+     return f'{self.id}: {self.pupil} - {self.teacher}'
+  
 
 
 class RatingLog(models.Model):
-   sender = models.CharField(max_length=150,)
-   reciever = models.CharField(max_length=150)
-   rating = models.IntegerField()
-   timestamp = models.DateTimeField(auto_now_add=True)
-
-   def __str__(self):
-        return f'{self.sender} rated {self.reciever} - {self.rating}'
-   
-   def get_rate_log(sender_name, reciever_name):
-      try:
-         log = RatingLog.objects.get(sender=sender_name, reciever=reciever_name)
-         return log
-      except RatingLog.DoesNotExist:
-         return None
-
+  sender = models.CharField(max_length=150,)
+  reciever = models.CharField(max_length=150)
+  rating = models.IntegerField()
+  timestamp = models.DateTimeField(auto_now_add=True)
+  
+  def get_rate_log(sender_name, reciever_name):
+    try:
+        log = RatingLog.objects.get(sender=sender_name, reciever=reciever_name)
+        return log
+    except RatingLog.DoesNotExist:
+        return None
+    
+  def __str__(self):
+    return f'{self.sender} rated {self.reciever} - {self.rating}'
+    
