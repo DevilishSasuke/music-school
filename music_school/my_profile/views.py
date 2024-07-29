@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
-from main.models import MyUser, RatingLog
+from main.models import MyUser, RatingLog, Subscription
 
 from .forms import UserInfoForm, RateForm
 
@@ -17,11 +17,13 @@ def own_profile(request):
 def profile(request, username):
   profile_name = request.user.username
   is_owner = username == profile_name
+  sub = Subscription.get_sub(request.user.username, username)
+  form = None
+
   if is_owner:
     user = request.user
   else:
     user = MyUser.get_user_by_username(username=username)
-  form = None
 
   if not user:
     messages.error(request, f"There is no such a user: {username}")
@@ -46,6 +48,7 @@ def profile(request, username):
     "title": "Мой профиль",
     "user": user,
     "form": form,
+    "sub": sub,
     "is_owner": is_owner,
   }
 
@@ -90,3 +93,34 @@ def rate(request, username):
   }
 
   return render(request, 'rate.html', data)
+
+def sub(request, teacher_usrnm):
+  pupil = request.user
+  teacher = MyUser.get_user_by_username(teacher_usrnm)
+  sub = Subscription.get_sub(pupil.username, teacher_usrnm)
+
+  if pupil.is_teacher or not teacher.is_teacher:
+    messages.error(request, f'Only pupil can subscribe on teacher')
+    return redirect("profile",  username=teacher_usrnm)
+
+  if sub:
+    messages.error(request, f'You already subscribed on {teacher_usrnm}')
+    return redirect("profile",  username=teacher_usrnm)
+
+  Subscription.objects.create(pupil=pupil.username, teacher=teacher_usrnm)
+  messages.success(request, f'You successfully subscribed on {teacher_usrnm}')
+  
+  return redirect("profile",  username=teacher_usrnm)
+
+def unsub(request, teacher_usrnm):
+  pupil = request.user
+  teacher = MyUser.get_user_by_username(teacher_usrnm)
+  sub = Subscription.get_sub(pupil.username, teacher_usrnm)
+
+  if sub:
+    sub.delete()
+    messages.success(request, f'You successfully unsubscribed on {teacher_usrnm}')
+  else:
+    messages.error(request, f'You have no subscription on {teacher_usrnm}')
+
+  return redirect("profile",  username=teacher_usrnm)

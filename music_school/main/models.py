@@ -39,6 +39,18 @@ class MyUser(AbstractUser):
     return self.username
 
 
+class Subscription(models.Model):
+   pupil = models.CharField(max_length=150,)
+   teacher = models.CharField(max_length=150,)
+
+   def get_sub(pupil, teacher):
+      try:
+         log = Subscription.objects.get(pupil=pupil, teacher=teacher)
+         return log
+      except Subscription.DoesNotExist:
+         return None
+
+
 class RatingLog(models.Model):
    sender = models.CharField(max_length=150,)
    reciever = models.CharField(max_length=150)

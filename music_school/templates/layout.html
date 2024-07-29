@@ -37,9 +37,15 @@
   {% if messages %}
     <div class="message-container" id="message-container">
       {% for message in messages %}
-        <div class="messages">
+        {% if "error" == message.tags %}
+        <div class="messages error">
           <span>{{ message }}</span> <br>
         </div>
+        {% elif "success" in message.tags %}
+        <div class="messages success">
+          <span>{{ message }}</span> <br>
+        </div>
+        {% endif %}
       {% endfor %}
     </div>
   {% endif %}

@@ -66,8 +66,8 @@ def bug(request):
       user_email = form.cleaned_data['user_email']
       user_msg = form.cleaned_data['text']
       send_bug_report(user_email, user_msg)
-      messages.error(request, f'Спасибо за ваше обращение, {user_email}')
-      return redirect("/bug")
+      messages.success(request, f'Thanks for your request, {user_email}')
+      return redirect("home")
     else:
       for _, errors in form.errors.items():
         for error in errors:
