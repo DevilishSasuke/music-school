@@ -1,10 +1,10 @@
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.utils import timezone
-import datetime
+import datetime, calendar
 
 from .validators import validate_file_size, validate_date_time
-from main.models import Subscription
+from main.models import MyUser, Subscription
 
 extensions = [
    "jpg", "jpeg", "png", "gif", "bmp", #image files 
@@ -65,6 +65,38 @@ class Lesson(models.Model):
         lessons = lessons | query
 
     return lessons
+  
+  def get_this_month_lessons(username):
+    user = MyUser.get_user_by_username(username)
 
+    now = timezone.now()
+    _, num_days = calendar.monthrange(now.year, now.month)
+    first_day = datetime.date(now.year, now.month, 1)
+    last_day = datetime.date(now.year, now.month, num_days)
+
+    if user.is_teacher:
+      try:
+        lessons = Lesson.objects.filter(teacher=username, date__range=(first_day, last_day))
+        lessons = lessons.order_by("date")
+        return lessons
+      except Lesson.DoesNotExist:
+        return None
+      
+    teacher_list = Subscription.get_teacher_list(username)
+
+    lessons = None
+    try:
+      for teacher in teacher_list:
+        query = Lesson.objects.filter(teacher=teacher, date__range=(first_day, last_day))
+        if not lessons:
+          lessons = query
+        else:
+          lessons = lessons | query
+
+      lessons = lessons.order_by("date")
+      return lessons
+    except Lesson.DoesNotExist:
+      return lessons
+    
   def __str__(self):
     return f'{self.id}: {self.title} - {self.teacher} - {self.date}'

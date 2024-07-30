@@ -6,20 +6,38 @@
   <link rel="stylesheet" href="{% static 'lessons/css/lessons.css' %}">
 {% endblock %}
 
+{% block style %}
+.redir {
+  width: 50%;
+  height: 100px;
+  margin-left: 25%;
+  font-size: 2rem;
+  font-family: bold;
+  font-weight: 900;
+  letter-spacing: 10px;
+  color: black;
+}
+{% endblock %}
+
 {% block content %}
 <div class="lesson-info">
   <header class="title"><b>Урок #{{ lesson.id }}<br>
     <i>{{ lesson.title }}</i></b></header>
   <br>
-  <h2>Описание урока</h2>
-  <textarea disabled rows="2">{{ lesson.description }}</textarea>
   <h2>Учитель, проводящий урок</h2>
   <a href="{% url 'profile' lesson.teacher %}"><p>{{ lesson.teacher }}</p></a>
   <h2>Дата проведения</h2>
   <p>{{ lesson.date }}</p>
-  {% if lesson.file %}
-  <h2>Прикрепленный файл</h2>
-  <a href="{{ lesson.file.url }}" download="{{ lesson.file.name }}">Скачать</a>
+  {% if is_paid %}
+    <h2>Описание урока</h2>
+    <textarea disabled rows="2">{{ lesson.description }}</textarea>
+      {% if lesson.file %}
+      <h2>Прикрепленный файл</h2>
+      <a href="{{ lesson.file.url }}" download="{{ lesson.file.name }}">Скачать</a>
+      {% endif %}
+  {% else %}
+    <button class="btn redir" style="background-color: #1464f6;" 
+    onclick="location.href='{% url 'home' %}'">ОПЛАТИТЬ УРОК <i class="fa-regular fa-credit-card"></i></button>
   {% endif %}
 </div>
 {% endblock %}

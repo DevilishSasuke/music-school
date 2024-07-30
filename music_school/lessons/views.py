@@ -1,10 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.utils import timezone
 
 from main.models import MyUser
 from .models import Lesson
 from .forms import LessonForm
+
+import calendar
 
 LESSON_AMOUNT_ON_PAGE = 3 * 2
 
@@ -34,13 +37,38 @@ def lessons(request):
   return render(request, "lessons.html", data)
 
 @login_required
-def calendar(request):
+def my_calendar(request):
+  today = timezone.now().date()
+  cal = calendar.monthcalendar(today.year, today.month)
+  week_days = ["ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС"]
   
+  lessons = Lesson.get_this_month_lessons(request.user.username)
+
+  # dict of lessons corresponding to the days
+  # if 2 or more in 1 day
+  # the first lesson is shown
+  lesson_days = {}
+  for lesson in reversed(lessons):
+    lesson_days[lesson.date.day] = lesson
+
+  # list of days
+  # for correct calendar display on html page
+  # and for url binding
+  days_with_ids = []
+  for week in cal:
+    for day in week:
+      if day in lesson_days:
+        days_with_ids.append(MyDay(day, lesson_days[day]))
+      else:
+        days_with_ids.append(MyDay(day))
+
   data = {
-    "title": "Календарь заданий",
+    "today": today,
+    "week_days": week_days,
+    "days": days_with_ids,
   }
 
-  return render(request, "layout.html", data)
+  return render(request, "calendar.html", data)
 
 
 
@@ -50,6 +78,7 @@ def lesson(request, number):
   user.update_online()
   lesson = Lesson.get_lesson_by_id(number)
   is_lesson_owner = request.user.username == lesson.teacher
+  is_paid = False
 
   if not lesson:
     messages.error(request, f"No such a lesson")
@@ -59,6 +88,7 @@ def lesson(request, number):
     "title": "Урок: " + lesson.title[0:20],
     "user": user,
     "lesson": lesson,
+    "is_paid": is_paid, 
   } 
 
   if not user.is_teacher:
@@ -128,3 +158,9 @@ def add_lesson(request):
   }
 
   return render(request, "add-lesson.html", data)
+
+
+class MyDay:
+  def __init__(self, number, lesson=None):
+    self.number = number
+    self.lesson = lesson

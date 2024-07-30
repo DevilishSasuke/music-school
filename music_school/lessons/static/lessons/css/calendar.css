@@ -1,0 +1,44 @@
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+}
+
+.day {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  font-size: 2rem;
+}
+
+.day p {
+  margin-bottom: 1%;
+}
+
+.lesson-day {
+  background-color: rgba(255, 0, 0, 0.5);;
+}
+
+.calendar a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.empty {
+  background-color: #f0f0f0;
+}
+
+.week-day {
+  background-color: #e0e0e0;
+  font-weight: bold;
+  border-radius: 15px;
+  padding: 5px;
+}
+
+.cal-header {
+  background-color:darkgray;
+  font-size: 3rem;
+  font-weight: bold;
+  border-radius: 20px 20px 0px 0px;
+  margin-bottom: 10px;;
+}

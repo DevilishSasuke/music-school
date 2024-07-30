@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block dependencies %}
+  <link rel="stylesheet" href="{% static 'lessons/css/lessons.css' %}">
+  <link rel="stylesheet" href="{% static 'lessons/css/calendar.css' %}">
+{% endblock %}
+
+{% block content %}
+<header class="cal-header">{{ today }}</header>
+<div class="calendar">
+  {% for day in week_days %}
+      <div class="week-day">{{ day }}</div>
+  {% endfor %}
+  {% for day in days %}
+    {% if day.number == 0 %}
+    <div class="day empty"></div>
+    {% else %}
+      {% if day.lesson.id %}
+      <a href="{% url 'lesson' day.lesson.id %}">
+        <div class="day lesson-day"><p>{{ day.lesson.title|slice:":9" }}</p>
+          <p>{{ day.number }}</p></div>
+      </a>
+      {% else %}
+      <div class="day"><br><p>{{ day.number }}</p></div>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+</div>
+{% endblock %}
+
