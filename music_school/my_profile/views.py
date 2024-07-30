@@ -8,6 +8,8 @@ from .forms import UserInfoForm, RateForm
 
 @login_required
 def own_profile(request):
+  request.user.update_online()
+
   username = request.user.username
   link = "/profile/" + username
 
@@ -15,6 +17,8 @@ def own_profile(request):
 
 @login_required
 def profile(request, username):
+  request.user.update_online()
+
   profile_name = request.user.username
   is_owner = username == profile_name
   sub = Subscription.get_sub(request.user.username, username)
@@ -56,6 +60,8 @@ def profile(request, username):
 
 @login_required
 def rate(request, username):
+  request.user.update_online()
+
   # can't rate urself
   if username == request.user.username:
     messages.error(request, f'You can\'t rate yourself')
@@ -94,7 +100,10 @@ def rate(request, username):
 
   return render(request, 'rate.html', data)
 
+@login_required
 def sub(request, teacher_usrnm):
+  request.user.update_online()
+
   pupil = request.user
   teacher = MyUser.get_user_by_username(teacher_usrnm)
   sub = Subscription.get_sub(pupil.username, teacher_usrnm)
@@ -112,9 +121,11 @@ def sub(request, teacher_usrnm):
   
   return redirect("profile",  username=teacher_usrnm)
 
+@login_required
 def unsub(request, teacher_usrnm):
+  request.user.update_online()
+
   pupil = request.user
-  teacher = MyUser.get_user_by_username(teacher_usrnm)
   sub = Subscription.get_sub(pupil.username, teacher_usrnm)
 
   if sub:

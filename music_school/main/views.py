@@ -16,6 +16,9 @@ from .models import MyUser
 load_dotenv() # load all env vars
 
 def home(request):
+  if request.user.is_authenticated:
+    request.user.update_online()
+
   username = request.user.username
 
   data = {
@@ -39,6 +42,9 @@ def chat(request):
 
 
 def rating(request):
+  if request.user.is_authenticated:
+    request.user.update_online()
+
   users = MyUser.objects.all()
   users = sorted(users, key=lambda user: user.rating, reverse=True)
 

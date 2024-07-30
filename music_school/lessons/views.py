@@ -38,6 +38,7 @@ def lessons(request):
 
 @login_required
 def my_calendar(request):
+  request.user.update_online()
   today = timezone.now().date()
   cal = calendar.monthcalendar(today.year, today.month)
   week_days = ["ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС"]
@@ -124,6 +125,7 @@ def lesson(request, number):
 @login_required
 def add_lesson(request):
   user = request.user
+  user.update_online()
 
   if not user.is_teacher:
     return redirect("home")
