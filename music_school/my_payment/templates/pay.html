@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block dependencies %}
+  <link rel="stylesheet" href="{% static 'my_payment/css/pay.css' %}">
+{% endblock %}
+
+{% block content %}
+<header> Информация об оплате урока </header>
+{{ lesson.title }}
+{{ lesson.teacher }}
+{{ lesson.price }}
+{% endblock %}

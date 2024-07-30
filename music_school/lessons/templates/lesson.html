@@ -14,7 +14,7 @@
   font-size: 2rem;
   font-family: bold;
   font-weight: 900;
-  letter-spacing: 10px;
+  letter-spacing: 2px;
   color: black;
 }
 {% endblock %}
@@ -37,7 +37,7 @@
       {% endif %}
   {% else %}
     <button class="btn redir" style="background-color: #1464f6;" 
-    onclick="location.href='{% url 'home' %}'">ОПЛАТИТЬ УРОК <i class="fa-regular fa-credit-card"></i></button>
+    onclick="location.href='{% url 'pay' lesson.id %}'">ОПЛАТИТЬ УРОК {{ lesson.price }} ₽ <i class="fa-regular fa-credit-card"></i></button>
   {% endif %}
 </div>
 {% endblock %}

@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.utils import timezone
 
 from main.models import MyUser
+from my_payment.models import Payment
 from .models import Lesson
 from .forms import LessonForm
 
@@ -79,7 +80,7 @@ def lesson(request, number):
   user.update_online()
   lesson = Lesson.get_lesson_by_id(number)
   is_lesson_owner = request.user.username == lesson.teacher
-  is_paid = False
+  is_paid = Payment.is_paid(user.username, number)
 
   if not lesson:
     messages.error(request, f"No such a lesson")
@@ -105,9 +106,11 @@ def lesson(request, number):
 
     if form.is_valid():
       cur_form = form.save(commit=False)
+      lesson.teacher = request.user.username
       lesson.date = cur_form.date
       lesson.title = cur_form.title
       lesson.description = cur_form.description
+      lesson.price = cur_form.price
       if "file" in request.FILES:
         lesson.file = request.FILES["file"]
 
@@ -140,7 +143,8 @@ def add_lesson(request):
         teacher=request.user.username,
         date=cur_form.date,
         title=cur_form.title,
-        description=cur_form.description
+        description=cur_form.description,
+        price=cur_form.price,
       )
 
       if "file" in request.FILES:

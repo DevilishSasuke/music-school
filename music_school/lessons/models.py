@@ -1,4 +1,4 @@
-from django.core.validators import FileExtensionValidator
+from django.core.validators import FileExtensionValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone
 import datetime, calendar
@@ -23,6 +23,8 @@ class Lesson(models.Model):
   date = models.DateTimeField(blank=False, null=False, validators=[validate_date_time])
   title = models.CharField(max_length=100, blank=False, null=False)
   description = models.TextField(blank=True, null=True)
+  price = models.DecimalField(max_digits=10, decimal_places=2, blank=False, null=False,
+                              validators=[MinValueValidator(0)])
   file = models.FileField(upload_to=lessons_file_path, null=True, blank=True,
                           validators=[FileExtensionValidator(allowed_extensions=extensions),
                                       validate_file_size])

@@ -28,7 +28,7 @@ INSTALLED_APPS = [
     'my_auth',
     'my_profile',
     'lessons',
-    
+    'my_payment',
 ]
 
 MIDDLEWARE = [

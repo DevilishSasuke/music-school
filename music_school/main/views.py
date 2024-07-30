@@ -55,15 +55,6 @@ def rating(request):
 
   return render(request, "rating.html", data)
 
-@login_required
-def pay(request):
-
-  data = {
-    "title": "Оплата",
-  }
-
-  pass
-
 def bug(request):
   if  request.method == 'POST':
     form = BugForm(request.POST)

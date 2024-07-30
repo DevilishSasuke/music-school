@@ -40,7 +40,7 @@
   padding: 0px 5px;
   width: 70%;
   margin: 15px 0px;
-  margin-bottom: 1%;
+  margin-bottom: 0.5%;
   display: inline-block;
   border: 1px solid #ccc;
   border-radius: 10px;
@@ -51,9 +51,10 @@
   font-size: 2rem;
 }
 
-.lesson-form > p {
+.lesson-form  p {
   font-size: 2rem;
   margin: 5px;
+  margin-bottom: -0.1%;
 }
 
 .lesson-form > button {

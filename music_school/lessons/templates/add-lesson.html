@@ -11,12 +11,14 @@
     {% csrf_token %}
     <p> Название урока </p>
     {{ form.title }}
-    <p> Описание урока </p>
-    {{ form.description }}
     <p> Дата проведения урока </p>
     {{ form.date }}
+    <p> Описание урока </p>
+    {{ form.description }}
     <p> Прикрепленный к уроку файл </p>
     <div class="file-input">{{ form.file }}</div>
+    <p> Цена урока(в рублях) </p>
+    {{ form.price }}
     <button type="submit" class="btn btn-success"> Сохранить урок </button>
   </form>
 {% endblock %}
