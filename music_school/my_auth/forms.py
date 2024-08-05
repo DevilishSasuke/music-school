@@ -38,8 +38,8 @@ class RegistrationForm(UserCreationForm):
   is_teacher = ChoiceField(choices=ROLE_CHOICES)
 
   class Meta:
-
         model = MyUser
+        
         fields = [
             "username",
             "password1",
