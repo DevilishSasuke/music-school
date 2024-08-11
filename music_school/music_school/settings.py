@@ -15,7 +15,7 @@ SECRET_KEY = getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -128,3 +128,7 @@ EMAIL_HOST_PASSWORD = getenv("CORPORATE_EMAIL_PASS")
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+YOOKASSA_SECRET_KEY = getenv("YOOKASSA_SECRET_KEY")
+YOOKASSA_SHOP_ID = getenv("YOOKASSA_SHOP_ID")
+YOOKASSA_COMMISSION = float(getenv("YOOKASSA_COMMISSION"))

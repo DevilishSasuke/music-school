@@ -1,7 +1,10 @@
 from django.core.validators import FileExtensionValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone
+from django.conf import settings
+
 import datetime, calendar
+from decimal import Decimal
 
 from .validators import validate_file_size, validate_date_time
 from main.models import MyUser, Subscription
@@ -28,6 +31,11 @@ class Lesson(models.Model):
   file = models.FileField(upload_to=lessons_file_path, null=True, blank=True,
                           validators=[FileExtensionValidator(allowed_extensions=extensions),
                                       validate_file_size])
+
+  @property
+  def price_with_commission(self):
+    final_price = self.price * Decimal(1 + (settings.YOOKASSA_COMMISSION / 100))
+    return final_price.quantize(Decimal("1.00"))
 
   @property
   def get_date(self):

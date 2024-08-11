@@ -6,8 +6,23 @@
 {% endblock %}
 
 {% block content %}
-<header> Информация об оплате урока </header>
-{{ lesson.title }}
-{{ lesson.teacher }}
-{{ lesson.price }}
+<form class="pay-info-form" method="post">
+  <header> Информация об оплате урока </header>
+  {% csrf_token %}
+  <div class="pay-info-row">
+    <p class="left">Название урока</p>
+    <p class="right">{{ lesson.title }}</p>
+  </div>
+  <div class="pay-info-row">
+    <p class="left">Учитель</p>
+    <p class="right"><a href="{% url 'profile' lesson.teacher %}">{{ lesson.teacher }}</a></p>
+  </div>
+  <div class="pay-info-row">
+    <p class="left">Стоимость урока <br>c коммиссией</p>
+    <p class="right">{{ lesson.price_with_commission }} ₽</p>
+  </div>
+  <button class="btn btn-primary" type="submit" 
+  name="payment-type" 
+  value="yookassa-payment">Оплатить с помощью <img src="{% static 'img/yookassa-logo.png' %}"></button>
+</form>
 {% endblock %}

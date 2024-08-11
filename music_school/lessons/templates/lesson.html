@@ -37,7 +37,7 @@
       {% endif %}
   {% else %}
     <button class="btn redir" style="background-color: #1464f6;" 
-    onclick="location.href='{% url 'pay' lesson.id %}'">ОПЛАТИТЬ УРОК {{ lesson.price }} ₽ <i class="fa-regular fa-credit-card"></i></button>
+    onclick="location.href='{% url 'pay' lesson.id %}'">ОПЛАТИТЬ УРОК {{ lesson.price_with_commission }} ₽ <i class="fa-regular fa-credit-card"></i></button>
   {% endif %}
 </div>
 {% endblock %}
