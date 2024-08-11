@@ -11,15 +11,29 @@ class Payment(models.Model):
   payment_id = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
 
   def is_paid(username, lesson_id):
+    paid = False
     payments = Payment.objects.filter(user=username, lesson=lesson_id)
     for payment in payments:
       yoo_id = str(payment.payment_id)
       yoopayment = YooPayment.find_one(yoo_id)
       
-      if (yoopayment.status == "succeeded"):
-        return True
+      if yoopayment.status == "succeeded":
+        paid = True
+        break
 
-    return False
+    if paid:
+      Payment.remove_canceled(username, lesson_id)
+    return paid
+  
+  def remove_canceled(username, lesson_id):
+    payments = Payment.objects.filter(user=username, lesson=lesson_id)
+    
+    for payment in payments:
+      yoo_id = str(payment.payment_id)
+      yoopayment = YooPayment.find_one(yoo_id)
+
+      if yoopayment.status != "succeeded":
+        payment.delete()
 
   def __str__(self):
     return f'{self.payment_id}'
