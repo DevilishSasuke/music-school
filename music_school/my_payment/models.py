@@ -15,7 +15,7 @@ class Payment(models.Model):
     for payment in payments:
       yoo_id = str(payment.payment_id)
       yoopayment = YooPayment.find_one(yoo_id)
-
+      
       if (yoopayment.status == "succeeded"):
         return True
 

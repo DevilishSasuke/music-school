@@ -31,10 +31,10 @@ def pay(request, lesson_id):
     messages.error("No such a lesson")
     return redirect("home")
   
-  '''is_paid = Payment.is_paid(user.username, lesson_id)
+  is_paid = Payment.is_paid(user.username, lesson_id)
   if is_paid:
     messages.success(request, f"You have already paid for this lesson")
-    return redirect("lesson", number=lesson_id)'''
+    return redirect("lesson", number=lesson_id)
 
   data = {
     "title": "Оплата урока",
@@ -68,7 +68,7 @@ def pay(request, lesson_id):
       confirmation_url = payment.confirmation.confirmation_url
 
       my_payment = Payment.objects.create(
-        user=request.user.username, 
+        user=user.username, 
         lesson=lesson_id, 
         price=lesson.price_with_commission, 
         payment_id=payment.id,
