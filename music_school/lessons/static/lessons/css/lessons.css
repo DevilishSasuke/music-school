@@ -127,3 +127,11 @@ input[type="file"]::file-selector-button:active {
 .lesson-info p {
   font-size: 2rem;
 }
+
+.lesson-info #price {
+  padding: 5px; 
+  font-weight: 900; 
+  font-size: 2.8rem;
+  font-family: 'Montserrat', sans-serif;
+  text-shadow: 10px 10px 10px rgba(0, 0, 0, 0.5); 
+} 

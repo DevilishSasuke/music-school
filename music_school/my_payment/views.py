@@ -16,6 +16,7 @@ from .models import Payment
 Configuration.account_id = settings.YOOKASSA_SHOP_ID
 Configuration.secret_key = settings.YOOKASSA_SECRET_KEY
 commission = settings.YOOKASSA_COMMISSION
+LESSON_AMOUNT_ON_PAGE = 3 * 2
 
 @login_required
 def pay(request, lesson_id):
@@ -79,8 +80,33 @@ def pay(request, lesson_id):
 
   return render(request, "pay.html", data)
 
+@login_required
 def payments(request):
-  return redirect("bug")
+  user = request.user
+  user.update_online()
+
+  if user.is_teacher:
+    messages.error(request, f"You are teacher")
+    return redirect("home")
+  else:
+    lessons = Lesson.get_lessons_by_subscriptions(user.username)
+
+  lessons = lessons.order_by("date")
+  unpaid_lessons = [lesson for lesson in lessons if not Payment.is_paid(user.username, lesson.id)]
+  if unpaid_lessons:
+    unpaid_lessons = unpaid_lessons[:6]
+    empty_slots = [0] * (LESSON_AMOUNT_ON_PAGE - len(unpaid_lessons))
+  else:
+    empty_slots = [0] * LESSON_AMOUNT_ON_PAGE
+
+  data = {
+    "title": "Мои уроки",
+    "user": user,
+    "lessons": unpaid_lessons,
+    "empty_slots": empty_slots,
+  }
+  
+  return render(request, "payments.html", data)
 
 
 def price_with_commission(price, commission):
