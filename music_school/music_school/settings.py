@@ -19,6 +19,7 @@ ALLOWED_HOSTS = ['*']
 CSRF_TRUSTED_ORIGINS = ['https://24ca-217-77-54-63.ngrok-free.app']
 
 INSTALLED_APPS = [
+    #'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -26,10 +27,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+    'lessons',
     'my_auth',
     'my_profile',
-    'lessons',
     'my_payment',
+    'my_chat',
+    #'channels'
 ]
 
 MIDDLEWARE = [
