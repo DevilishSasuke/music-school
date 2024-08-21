@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block dependencies %}
+  <link rel="stylesheet" href="{% static 'my_profile/css/profile.css' %}">
+  <link rel="stylesheet" href="{% static 'my_chat/css/chat.css' %}"> 
+{% endblock %}
+
+{% block content %}
+<div class="user-info">
+  <div class="msg-container">
+    {% for message in messages %}
+      {% if message.reciever == user.username %}
+        <div class="msg left">{{message.message}}
+          <div class="msg-time">
+            {{message.timestamp|date:"d.m.y"}} {{ message.timestamp|time:"H:i" }} 
+          </div>
+        </div>
+      {% elif message.sender == user.username %}
+        <div class="msg right">{{message.message}}
+          <div class="msg-time">
+            {{message.timestamp|date:"d.m.y"}} {{ message.timestamp|time:"H:i" }} 
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+    <form method="post" class="message-form">
+      {% csrf_token %}
+      <textarea class="msg-area" rows="2" placeholder="Введите сообщение..." required></textarea>
+      <button class="msg-btn" type="submit"><i class="fa-solid fa-message"></i></button>
+    </form>
+  </div>
+</div>
+{% endblock %}

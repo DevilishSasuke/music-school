@@ -1,0 +1,43 @@
+{% extends 'layout.html' %}
+{% load static %}
+
+{% block dependencies %}
+  <link rel="stylesheet" href="{% static 'main/css/rating.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="rating-table">
+    <div class="rating-table-header">
+      <div id="profile"> Профиль </div>
+      <div id="username"> Имя пользователя </div>
+      <div id="fio"> Фамилия Имя Отчество </div>
+      <div id="amount"> Последний раз в сети </div>
+    </div>
+    {% if users %}
+      {% for user in users %}
+        <a class="rt-row" href="{% url 'chat' user.username %}">
+          <div id="profile">
+            {% if user.is_teacher %}
+            <img src="{% static 'img/teacher.jfif' %}" alt="teacher-img" id="profile-pic">
+            {% else %}
+            <img src="{% static 'img/pupil.jfif' %}" alt="teacher-img" id="profile-pic">
+            {% endif %}
+          </div>
+          <div id="username"> {{ user.username }} </div>
+          <div id="fio">
+            {% if user.last_name %}
+            {{ user.last_name }} 
+            {% endif %}
+            {% if user.first_name %}
+            {{ user.first_name }} 
+            {% endif %}
+            {% if user.middle_name %}
+            {{ user.middle_name }} 
+            {% endif %}
+          </div>
+          <div id="amount"> {{ user.last_online }} </div>
+        </a>
+      {% endfor %}
+      {% endif %}
+  </div>
+{% endblock %}

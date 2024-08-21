@@ -10,4 +10,5 @@ urlpatterns = [
     path('lessons/', include('lessons.urls')),
     path('pay/', include('my_payment.urls')),
     path('auth/', include('my_auth.urls')),
+    path('chat/', include('my_chat.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

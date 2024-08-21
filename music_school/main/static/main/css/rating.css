@@ -32,6 +32,8 @@
 
 .rt-row {
   margin-top: 0.5%;
+  text-decoration: none;
+  color: inherit;
 }
 
 .rt-row > div {
