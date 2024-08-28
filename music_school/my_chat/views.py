@@ -1,7 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.urls import reverse
 
 from .models import Message
 from main.models import MyUser
@@ -39,6 +38,12 @@ def chat(request, username):
   if not other_user:
     messages.error(request, f"There is no such a user: {username}")
     return redirect("home")
+  
+  if request.method == "POST":
+    message = request.POST['msg_text']
+
+    new_msg = Message(sender=user.username, reciever=username, message=message)
+    new_msg.save()
   
   msgs = Message.get_messages_for_chat(user.username, username)
 

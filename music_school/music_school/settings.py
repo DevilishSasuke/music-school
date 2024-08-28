@@ -15,11 +15,11 @@ SECRET_KEY = getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*"]
 CSRF_TRUSTED_ORIGINS = ['https://24ca-217-77-54-63.ngrok-free.app']
 
 INSTALLED_APPS = [
-    #'daphne',
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     'my_profile',
     'my_payment',
     'my_chat',
-    #'channels'
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -65,6 +65,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'music_school.wsgi.application'
 
+ASGI_APPLICATION = 'music_school.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases

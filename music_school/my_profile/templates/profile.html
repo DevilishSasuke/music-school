@@ -33,12 +33,14 @@
           onclick="location.href='{% url 'logout'%}'">НАПИСАТЬ СООБЩЕНИЕ <i class="fa-regular fa-message"></i></button>
           <button class="btn redir" style="background-color: #868282;" 
           onclick="location.href='{% url 'rate' user.username %}'">ОЦЕНИТЬ ПРОФИЛЬ <i class="fa-regular fa-star"></i></button>
-          {% if not sub %}
-          <button class="btn redir" style="background-color: #92d36e;" 
-          onclick="location.href='{% url 'sub' user.username %}'">ПОДПИСАТЬСЯ НА УРОКИ <i class="fa-solid fa-music"></i></button>
-          {% else %}
-          <button class="btn redir" style="background-color: #d14141;" 
-          onclick="location.href='{% url 'unsub' user.username %}'">ОТПИСАТЬСЯ ОТ УРОКОВ <i class="fa-solid fa-music"></i></button>
+          {% if user.is_teacher %}
+            {% if not sub %}
+            <button class="btn redir" style="background-color: #92d36e;" 
+            onclick="location.href='{% url 'sub' user.username %}'">ПОДПИСАТЬСЯ НА УРОКИ <i class="fa-solid fa-music"></i></button>
+            {% else %}
+            <button class="btn redir" style="background-color: #d14141;" 
+            onclick="location.href='{% url 'unsub' user.username %}'">ОТПИСАТЬСЯ ОТ УРОКОВ <i class="fa-solid fa-music"></i></button>
+            {% endif %}
           {% endif %}
         </div>
       {% endif %}
