@@ -11,9 +11,8 @@ def own_profile(request):
   request.user.update_online()
 
   username = request.user.username
-  link = "/profile/" + username
 
-  return redirect(link)
+  return redirect("profile", username=username)
 
 @login_required
 def profile(request, username):

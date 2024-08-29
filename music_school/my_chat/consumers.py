@@ -31,6 +31,45 @@ class ChatConsumer(AsyncWebsocketConsumer):
         self.channel_name
     )
 
-  async def recieve(self, text_data):
-    pass
+  async def receive(self, text_data):
+    text_data_json = json.loads(text_data)
+    message=text_data_json['message']
+
+    await self.save_message(self.user, self.other_user, message)
+
+    await self.channel_layer.group_send(
+            self.room_group_name,
+            {
+                'type': 'chat_message',
+                'message': message,
+                'username': self.user.username,
+                'timestamp': text_data_json['timestamp']
+            }
+        )
+    
+  async def chat_message(self, event):
+    message = event['message']
+    username = event['username']
+    timestamp = event['timestamp']
+
+    await self.send(text_data=json.dumps({
+            'message': message,
+            'username': username,
+            'timestamp': timestamp
+        }))
+    
+  @database_sync_to_async
+  def get_user(self, username):
+        try:
+            return MyUser.objects.get(username=username)
+        except MyUser.DoesNotExist:
+            return None
+
+  @database_sync_to_async
+  def save_message(self, sender, receiver, message):
+        Message.objects.create(sender=sender, reciever=receiver, message=message)
+
+
+
+
 

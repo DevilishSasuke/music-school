@@ -9,26 +9,100 @@
 {% block content %}
 <div class="user-info">
   <div class="msg-container">
-    {% for message in messages %}
+    <div class="chat-log" id="chat-log">
+      {% for message in messages %}
       {% if message.reciever == user.username %}
-        <div class="msg left">{{message.message}}
-          <div class="msg-time">
-            {{message.timestamp|date:"d.m.y"}} {{ message.timestamp|time:"H:i" }} 
-          </div>
+      <div class="msg left">{{message.message}}
+        <div class="msg-time">
+          {{message.timestamp|date:"d.m.y"}} {{ message.timestamp|time:"H:i" }} 
         </div>
+      </div>
       {% elif message.sender == user.username %}
-        <div class="msg right">{{message.message}}
-          <div class="msg-time">
-            {{message.timestamp|date:"d.m.y"}} {{ message.timestamp|time:"H:i" }} 
-          </div>
+      <div class="msg right">{{message.message}}
+        <div class="msg-time">
+          {{message.timestamp|date:"d.m.y"}} {{ message.timestamp|time:"H:i" }} 
         </div>
+      </div>
       {% endif %}
-    {% endfor %}
+      {% endfor %}
+    </div>
     <form method="post" class="message-form">
       {% csrf_token %}
-      <textarea class="msg-area" name="msg_text" rows="2" placeholder="Введите сообщение..." required></textarea>
-      <button class="msg-btn" type="submit"><i class="fa-solid fa-message"></i></button>
+      <textarea class="msg-area" name="msg_text" rows="2" id="chat-message-input" placeholder="Введите сообщение..." required></textarea>
+      <button class="msg-btn" type="submit" id="chat-message-submit"><i class="fa-solid fa-message"></i></button>
     </form>
   </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+    const username = "{{ user.username }}";
+    const otherUsername = "{{ other_user.username }}";
+    const chatSocket = new WebSocket(
+        'ws://' + window.location.host + '/ws/chat/' + otherUsername + '/'
+    );
+
+    window.onload = function() {
+      const chatLog = document.querySelector('#chat-log');
+      chatLog.scrollTop = chatLog.scrollHeight;
+    };
+
+    chatSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+        const message = data['message'];
+        const messageUsername = data['username'];
+        const timestamp = data['timestamp'];
+        const chatLog = document.querySelector('#chat-log');
+
+        const date = new Date(timestamp);
+
+        const formattedDate = date.toLocaleDateString('ru-RU', {
+            day: '2-digit',
+            month: '2-digit',
+            year: '2-digit',
+        });
+
+        const formattedTime = date.toLocaleTimeString('ru-RU', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false,
+        });
+
+        const formattedTimestamp = `${formattedDate} ${formattedTime}`;
+
+        if (messageUsername == username) {
+          chatLog.innerHTML += 
+          `<div class="msg right">${message}
+            <div class="msg-time">
+              ${formattedTimestamp} 
+            </div>
+          </div>`
+        }
+        else {
+          chatLog.innerHTML += 
+          `<div class="msg left">${message}
+            <div class="msg-time">
+              ${formattedTimestamp} 
+            </div>
+          </div>`
+        }
+
+        chatLog.scrollTop = chatLog.scrollHeight;
+    };
+
+    chatSocket.onclose = function(e) {
+        console.error('Chat socket closed unexpectedly');
+    };
+
+    document.querySelector('#chat-message-submit').onclick = function(e) {
+        const messageInputDom = document.querySelector('#chat-message-input');
+        const message = messageInputDom.value;
+        const timestamp = new Date().toISOString();
+    
+        chatSocket.send(JSON.stringify({
+            'message': message,
+            'timestamp': timestamp
+        }));
+        messageInputDom.value = '';
+    };
 {% endblock %}

@@ -44,12 +44,15 @@ def chat(request, username):
 
     new_msg = Message(sender=user.username, reciever=username, message=message)
     new_msg.save()
+
+    return redirect("chat", username=username)
   
   msgs = Message.get_messages_for_chat(user.username, username)
 
   data = {
     "title": f"Чат с {username}" ,
     "user": user,
+    "other_user": other_user,
     "messages": msgs,
   }
   
