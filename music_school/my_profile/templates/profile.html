@@ -30,7 +30,7 @@
       {% else %}
         <div class="user-edit" style="display: flex; flex-direction: column;  justify-content: center;align-items: center;">
           <button class="btn redir" style="background-color: #e692f8;"
-          onclick="location.href='{% url 'logout'%}'">НАПИСАТЬ СООБЩЕНИЕ <i class="fa-regular fa-message"></i></button>
+          onclick="location.href='{% url 'chat' user.username %}'">НАПИСАТЬ СООБЩЕНИЕ <i class="fa-regular fa-message"></i></button>
           <button class="btn redir" style="background-color: #868282;" 
           onclick="location.href='{% url 'rate' user.username %}'">ОЦЕНИТЬ ПРОФИЛЬ <i class="fa-regular fa-star"></i></button>
           {% if user.is_teacher %}

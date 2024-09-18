@@ -15,8 +15,8 @@ SECRET_KEY = getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
-CSRF_TRUSTED_ORIGINS = ['https://24ca-217-77-54-63.ngrok-free.app']
+ALLOWED_HOSTS = ["*", "localhost", "127.0.0.1"]
+CSRF_TRUSTED_ORIGINS = []
 
 INSTALLED_APPS = [
     'daphne',
@@ -122,7 +122,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     BASE_DIR / "static",
