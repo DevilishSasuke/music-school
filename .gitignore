@@ -92,6 +92,3 @@ db.sqlite3
 /venv/
 media/
 staticfiles/
-
-Dockerfile
-.dockerignore
